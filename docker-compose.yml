@@ -1,0 +1,71 @@
+name: aidiary
+version: '3.5'
+
+services:
+  # Langchain
+  langchain-api:
+    build: ./api
+    command: python main.py # fastapi run main.py --port 8000
+    env_file:
+      - .env
+    volumes:
+      - ./api:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - "postgresdb"
+      - "ollama"
+
+  # Front
+  front:
+    image: front
+    build:
+      context: ./front
+      dockerfile: ./Dockerfile
+    command: sh -c "python manage.py runserver '0.0.0.0:80'"
+    volumes:
+      - ./front:/app
+    ports:
+      - 80:80
+    env_file:
+      - .env
+    depends_on:
+      - postgresdb
+      - langchain-api
+
+  # LLM
+  ollama:
+    image: ollama/ollama:0.5.4
+    env_file:
+      - .env
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+
+  # Postgres
+  postgresdb:
+    image: pgvector/pgvector:0.8.0-pg17
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+  
+  adminer:
+    image: library/adminer:latest
+    ports:
+      - 8080:8080
+    environment:
+      - ADMINER_DEFAULT_DB_DRIVER=pgsql
+      - ADMINER_DEFAULT_DB_HOST=postgresdb
+      - ADMINER_DEFAULT_DB_NAME=aidiary_development
+
+volumes:
+  ollama:
+  pgdata:
+
+networks:
+  default:
+    name: aidiary
