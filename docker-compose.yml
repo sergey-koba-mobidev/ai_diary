@@ -10,11 +10,11 @@ services:
       - .env
     volumes:
       - ./api:/app
+      - ./diary_files:/diary_files
     ports:
       - "8000:8000"
     depends_on:
       - "postgresdb"
-      - "ollama"
 
   # Front
   front:
@@ -32,16 +32,6 @@ services:
     depends_on:
       - postgresdb
       - langchain-api
-
-  # LLM
-  ollama:
-    image: ollama/ollama:0.5.4
-    env_file:
-      - .env
-    volumes:
-      - ollama:/root/.ollama
-    ports:
-      - "11434:11434"
 
   # Postgres
   postgresdb:

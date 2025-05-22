@@ -1,15 +1,20 @@
 import os
-from langchain_ollama import OllamaLLM
 from constants import TEMPERATURE
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-OLLAMA_BASE_URL = os.getenv("OLLAMA_SERVER_URL", "http://ollama:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "deepseek-r1:1.5b")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+MODEL = "gemini-2.5-flash-preview-05-20"
 
 
 class DiaryLLM:
     def __init__(self) -> None:
-        self.llm = OllamaLLM(
-            model=OLLAMA_MODEL, base_url=OLLAMA_BASE_URL, temperature=TEMPERATURE
+        os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+        self.llm = ChatGoogleGenerativeAI(
+            model=MODEL,
+            temperature=0,
+            max_tokens=None,
+            timeout=None,
+            max_retries=2,
         )
 
     def get(self):

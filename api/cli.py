@@ -1,5 +1,7 @@
 import typer
 from llms.diary_llm import DiaryLLM
+from operations.diary_file.load import Load
+from operations.diary_record.get_llm_responses import GetLLMResponses
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -15,11 +17,20 @@ def invoke_llm(query: str):
 
 
 @app.command()
-def test(query: str):
+def import_diary_file(file_name: str):
     """
-    Test
+    Import a markdown file from /diary_files folder, split it by headers ### and load to database
     """
-    print("test")
+    documents = Load(file_name=file_name).run()
+    print(f"Processed {len(documents)} records.")
+
+
+@app.command()
+def get_llm_responses():
+    """
+    Process all diary records without response and get response
+    """
+    GetLLMResponses().run()
 
 
 if __name__ == "__main__":

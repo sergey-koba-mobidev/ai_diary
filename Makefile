@@ -4,7 +4,7 @@ DOCKER_COMPOSE = docker-compose
 API_RUNNER = docker-compose run --rm langchain-api
 
 # Containers
-OLLAMA_CONTAINER_NAME = $(shell docker ps | grep ollama | rev | cut -d' ' -f1 | rev)
+API_CONTAINER_NAME = $(shell docker ps | grep api | rev | cut -d' ' -f1 | rev)
 
 # Default target
 all: setup
@@ -15,15 +15,6 @@ setup: ## Build Docker containers
 	cp .env.example .env
 	$(DOCKER_COMPOSE) build
 	$(DOCKER_COMPOSE) up -d
-	$(MAKE) setup-ollama
-
-.PHONY: setup-ollama
-setup-ollama: ## Install llama3 model
-# Need OLLAMA_CONTAINER_NAME because container name can vary due to Docker version
-	@echo "Downloading LLM model may take several minutes. Please wait..."
-	@sleep 20
-	$(DOCKER) exec -ti $(OLLAMA_CONTAINER_NAME) ollama pull nomic-embed-text
-	$(DOCKER) exec -ti $(OLLAMA_CONTAINER_NAME) ollama pull deepseek-r1:1.5b
 
 .PHONY: licenses
 licenses: ## Generate LICENSE-DEPENDENCIES.md file
@@ -55,9 +46,30 @@ clean: ## Stop and remove Docker containers
 pipinstall: ## Install python requirements
 	$(API_RUNNER) pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
+.PHONY: api-console
+api-console:
+	$(API_RUNNER) /bin/bash
+
 .PHONY: invoke-llm
 invoke-llm:
 	$(API_RUNNER) python cli.py invoke-llm "${QUERY}"
+
+.PHONY: alembic-revision
+alembic-revision:
+	$(API_RUNNER) alembic revision --autogenerate -m "${M}"
+
+.PHONY: alembic-upgrade
+alembic-upgrade:
+	$(API_RUNNER) alembic upgrade head
+
+.PHONY: import-diary-file
+import-diary-file:
+	$(API_RUNNER) python cli.py import-diary-file "${FILE}"
+
+.PHONY: get-llm-responses
+get-llm-responses:
+	$(API_RUNNER) python cli.py get-llm-responses
+
 
 .PHONY: help
 help: ## Show list of commands

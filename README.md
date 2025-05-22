@@ -5,7 +5,7 @@ Parse diary in PDF files, add tags, keywords, build analytics using LLM.
 
 ## Architecture
 - use Langchain as framework to connect LLM with python
-- use Ollama as LLM
+- use Gemini as LLM
 - use Postgres as Vector DB and DocStore
 
 ## Getting started
@@ -16,7 +16,11 @@ Parse diary in PDF files, add tags, keywords, build analytics using LLM.
 ## Everyday Usage
 - `make start`
 - `make stop`
+- `make api-console` - open console of api container
 - `make invoke-llm QUERY="<QUESTION>"` - ask LLM a question. Example: `make invoke-llm QUERY="how are you?"`
+- `make alembic-revision M="<MESSAGE>"` - generate alembic revision
+- `make import-diary-file FILE="<FILE_NAME>"` - import markdown file from `/diary_files`
+- `make get-llm-responses` - process all records without llm response
 
 ## Help
 - run `make help` to see all commands
@@ -26,7 +30,6 @@ Parse diary in PDF files, add tags, keywords, build analytics using LLM.
 - http://localhost:8000/api - Api
 - http://localhost:8000/docs - Api docs
 - http://localhost/ - Front
-- http://localhost:11434/ - Ollama API
 
 ## License
 TODO
