@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Tag {{ tag.title }}{% endblock %}
+{% block title %}Person {{ person.name }}{% endblock %}
 
 {% block content %}
 <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
   <div class="flex justify-between">
     <div>
-      <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">{{ tag.title }}</h5>
-      <p class="text-base font-normal text-gray-500 dark:text-gray-400">{{ tag.diary_records_count }} Records</p>
+      <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">{{ person.name }}</h5>
+      <p class="text-base font-normal text-gray-500 dark:text-gray-400">{{ person.actions_count }} Actions</p>
     </div>
   </div>
 </div>
@@ -17,22 +17,22 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Date
+                    Summary
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Summary
+                    Date
                 </th>
             </tr>
         </thead>
         <tbody>
-          {% for rec in diary_records %} 
+          {% for action in actions %} 
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <a href="/diary_records/{{ rec.id }}" class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400 inline-flex items-center justify-center">{{ rec.happened_at }}</a>
-                </th>
                 <td class="px-6 py-4">
-                    {{ rec.summary }}
+                    {{ action.description }}
                 </td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <a href="/diary_records/{{ action.diary_record_id }}" class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400 inline-flex items-center justify-center">{{ action.happened_at }}</a>
+                </th>
             </tr>
           {% endfor %} 
         </tbody>
