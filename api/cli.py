@@ -2,6 +2,7 @@ import typer
 from llms.diary_llm import DiaryLLM
 from operations.diary_file.load import Load
 from operations.diary_record.get_llm_responses import GetLLMResponses
+from operations.tag.generate_all import GenerateAll
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -31,6 +32,15 @@ def get_llm_responses():
     Process all diary records without response and get response
     """
     GetLLMResponses().run()
+
+
+@app.command()
+def process_llm_responses():
+    """
+    Process all diary records with LLM responses and generate entities like tags,
+    subjects, locations, etc.
+    """
+    GenerateAll().run()  # Generate tags
 
 
 if __name__ == "__main__":

@@ -70,6 +70,10 @@ import-diary-file:
 get-llm-responses:
 	$(API_RUNNER) python cli.py get-llm-responses
 
+.PHONY: get-llm-responses
+process-llm-responses:
+	$(API_RUNNER) python cli.py process-llm-responses
+
 
 .PHONY: help
 help: ## Show list of commands

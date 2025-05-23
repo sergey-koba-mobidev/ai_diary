@@ -24,3 +24,15 @@ def mood_chart(request):
             "categories": [mood["happened_at"] for mood in moods],
         },
     )
+
+
+def tags(request):
+    response = requests.post("http://langchain-api:8000/api/tags/", json={})
+    tags_dict = response.json()["tags"]
+    return render(
+        request,
+        "tags/list.html",
+        {
+            "tags": tags_dict,
+        },
+    )

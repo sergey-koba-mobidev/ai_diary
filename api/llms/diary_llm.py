@@ -3,7 +3,7 @@ from constants import TEMPERATURE
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-MODEL = "gemini-2.5-flash-preview-05-20"
+MODEL = "gemini-2.5-flash-preview-05-20"  # gemini-2.5-flash-preview-05-20 has unsolved bug https://github.com/langchain-ai/langchain-google/issues/936
 
 
 class DiaryLLM:
