@@ -20,6 +20,7 @@ Parse diary in PDF files, add tags, keywords, build analytics using LLM.
 - `make invoke-llm QUERY="<QUESTION>"` - ask LLM a question. Example: `make invoke-llm QUERY="how are you?"`
 - `make alembic-revision M="<MESSAGE>"` - generate alembic revision
 - `make import-diary-file FILE="<FILE_NAME>"` - import markdown file from `/diary_files`
+- `make import-sleep-csv FILE="<FILE_NAME>"` - import csv file from `/health_files`
 - `make get-llm-responses` - process all records without llm response
 - `make process-llm-responses` - process all records with llm response and generate tags, subjects, locations, etc.
 

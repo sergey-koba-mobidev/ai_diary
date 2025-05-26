@@ -88,3 +88,22 @@ class Person(Base):
         secondary="actions",
         back_populates="persons",
     )
+
+
+class Sleep(Base):
+    __tablename__ = "sleeps"
+
+    id = Column(Integer, primary_key=True)
+    deep_sleep_time = Column(Integer)  # minutes
+    shallow_sleep_time = Column(Integer)  # minutes
+    rem_time = Column(Integer)  # minutes
+    total_sleep_time = Column(
+        Integer, nullable=False
+    )  # deep_sleep_time + shallow_sleep_time + rem_time
+    wake_time = Column(Integer)
+    start_at = Column(DateTime(timezone=True))
+    stop_at = Column(DateTime(timezone=True))
+    naps = Column(Integer)
+    happened_at = Column(DateTime(timezone=True), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())

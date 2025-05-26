@@ -66,6 +66,10 @@ alembic-upgrade:
 import-diary-file:
 	$(API_RUNNER) python cli.py import-diary-file "${FILE}"
 
+.PHONY: import-sleep-csv
+import-sleep-csv:
+	$(API_RUNNER) python cli.py import-sleep-csv "${FILE}"
+
 .PHONY: get-llm-responses
 get-llm-responses:
 	$(API_RUNNER) python cli.py get-llm-responses

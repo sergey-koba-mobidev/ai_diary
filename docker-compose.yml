@@ -11,6 +11,7 @@ services:
     volumes:
       - ./api:/app
       - ./diary_files:/diary_files
+      - ./health_files:/health_files
     ports:
       - "8000:8000"
     depends_on:

@@ -1,6 +1,7 @@
 import typer
 from llms.diary_llm import DiaryLLM
 from operations.diary_file.load import Load
+from operations.sleep.import_csv import ImportCsv
 from operations.diary_record.get_llm_responses import GetLLMResponses
 from operations.tag.generate_all import GenerateAll as GenerateAllTags
 from operations.person.generate_all import GenerateAll as GenerateAllPersons
@@ -25,6 +26,15 @@ def import_diary_file(file_name: str):
     """
     documents = Load(file_name=file_name).run()
     print(f"Processed {len(documents)} records.")
+
+
+@app.command()
+def import_sleep_csv(file_name: str):
+    """
+    Import a csv file with sleep info
+    """
+    records = ImportCsv(file_name=file_name).run()
+    print(f"Processed {len(records)} sleep records.")
 
 
 @app.command()
