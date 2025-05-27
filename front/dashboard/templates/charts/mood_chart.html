@@ -66,14 +66,18 @@ const options = {
   },
   series: [
     {
-      name: "Mood",
-      data: {{ data|safe }}, //[6500, 6418, 6456, 6526, 6356, 6456],
+      name: "Mood (0 to 10)",
+      data: {{ moods_data|safe }},
       color: "#1A56DB",
+    },
+    {
+      name: "Sleep (hours)",
+      data: {{ sleeps_data|safe }},
+      color: "#C21807",
     },
   ],
   xaxis: {
     type: 'datetime',
-    categories: {{ categories|safe }},  // ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
     labels: {
       datetimeFormatter: {
         year: 'yyyy',

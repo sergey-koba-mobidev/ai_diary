@@ -12,14 +12,25 @@ def mood_chart(request):
         "start_date": "2020-01-01",
         "end_date": datetime.today().strftime("%Y-%m-%d"),
     }
-    response = requests.get("http://langchain-api:8000/api/mood_graph/", json=query_obj)
-    moods = response.json()["moods"]
+    moods_response = requests.get(
+        "http://langchain-api:8000/api/mood_graph/", json=query_obj
+    )
+    moods = moods_response.json()["moods"]
+    sleeps_response = requests.get(
+        "http://langchain-api:8000/api/sleeps/", json=query_obj
+    )
+    sleeps = sleeps_response.json()["sleeps"]
     return render(
         request,
         "charts/mood_chart.html",
         {
-            "data": [mood["mark"] for mood in moods],
-            "categories": [mood["happened_at"] for mood in moods],
+            "moods_data": [
+                {"y": mood["mark"], "x": mood["happened_at"]} for mood in moods
+            ],
+            "sleeps_data": [
+                {"y": sleep["total_sleep_time"] / 60, "x": sleep["happened_at"]}
+                for sleep in sleeps
+            ],
         },
     )
 
