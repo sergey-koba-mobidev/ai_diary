@@ -1,14 +1,17 @@
 from fastapi import FastAPI
+from typing import Any
 from annotations.mood_graph import MoodGraphRequest, MoodGraphAnswer
 from annotations.sleeps import SleepsRequest, SleepsAnswer
 from annotations.tags import TagsAnswer, TagDetailsAnswer
 from annotations.persons import PersonsAnswer, PersonDetailsAnswer
+from annotations.ask_about_data import AskAboutDataRequest
 from operations.mood.get_graph import GetGraph
 from operations.sleep.get_list import GetList
 from operations.tag.get_all import GetAll as GetAllTags
 from operations.tag.get import Get as GetTag
 from operations.person.get_all import GetAll as GetAllPersons
 from operations.person.get import Get as GetPerson
+from operations.text_to_sql.get_result import GetResult
 
 app = FastAPI()
 
@@ -69,3 +72,12 @@ async def person(person_id) -> PersonDetailsAnswer:
     return PersonDetailsAnswer(
         person=person_details["person"], actions=person_details["actions"]
     )
+
+
+@app.post("/api/ask_about_data/")
+async def ask_about_data(ask_about_data_request: AskAboutDataRequest) -> Any:
+    """
+    Return json with data of SQL query generated from user input
+    """
+    response = GetResult(user_input=ask_about_data_request.query).run()
+    return response

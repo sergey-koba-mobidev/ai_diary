@@ -5,6 +5,7 @@ from operations.sleep.import_csv import ImportCsv
 from operations.diary_record.get_llm_responses import GetLLMResponses
 from operations.tag.generate_all import GenerateAll as GenerateAllTags
 from operations.person.generate_all import GenerateAll as GenerateAllPersons
+from operations.diary_record.generate_fields import GenerateFields
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -51,6 +52,8 @@ def process_llm_responses():
     Process all diary records with LLM responses and generate entities like tags,
     subjects, locations, etc.
     """
+    GenerateFields().run()  # Generate fields
+    print("Generated fields")
     GenerateAllTags().run()  # Generate tags
     print("Generated tags")
     GenerateAllPersons().run()  # Generate tags
