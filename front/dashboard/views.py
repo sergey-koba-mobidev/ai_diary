@@ -79,3 +79,17 @@ def person(request, person_id):
         "persons/show.html",
         {"person": person_response["person"], "actions": person_response["actions"]},
     )
+
+
+def chat(request):
+    return render(request, "chat.html", {})
+
+
+def qa(request):
+    query = request.POST.get("query", "")
+    query_obj = {"query": query}
+    response = requests.post(
+        "http://langchain-api:8000/api/ask_about_data/", json=query_obj
+    )
+    answer = response.json()["answer"]
+    return render(request, "answer.html", {"query": query, "answer": answer})

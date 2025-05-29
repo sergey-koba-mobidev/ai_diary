@@ -7,6 +7,7 @@ Based on the following database schema:
 Convert this question into a SQL query for PostgreSQL:
 ###USER_INPUT###
 
+Remember that strings could have different registry.
 Return ONLY the SQL query with no additional text.
 """
 

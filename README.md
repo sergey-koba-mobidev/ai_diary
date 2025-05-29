@@ -37,5 +37,8 @@ Parse diary in PDF files, add tags, keywords, build analytics using LLM.
 TODO
 
 ## TODO
-- text to sql using alembic file with comments. Move json values to fields for AI.
+- AI agent decide if generate chart for data.
 - AI agent to decide if it should ask vector db or text to sql.
+- Vector DB to enable seaching in diary
+- add sports data
+- import huawei data

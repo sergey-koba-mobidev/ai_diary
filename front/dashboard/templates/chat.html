@@ -1,0 +1,29 @@
+{% extends "chat_base.html" %}
+
+{% block title %}Ask about diary{% endblock %}
+
+{% block content %}
+    <!-- Component Start -->
+	<div class="flex flex-col flex-grow w-full max-w-l bg-white shadow-xl rounded-lg overflow-hidden">
+		<div class="flex flex-col flex-grow h-0 p-4 overflow-auto" id="messages">
+			<div class="flex w-full mt-2 space-x-3 max-w-xl">
+				<div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+				<div>
+					<div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+						<p class="text-sm">Welcome, I am Diary Assistant. You can ask me any questions about your diary.</p>
+					</div>
+					<span class="text-xs text-gray-500 leading-none">Now</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-gray-300 p-4">
+      <form hx-post="/qa" hx-target="#messages" hx-swap="beforeend" hx-on::after-request="this.reset()" class="flex w-full">
+        {% csrf_token %}
+        <input class="flex items-center h-10 w-full rounded px-3 text-sm" type="text" name="query" placeholder="Type your message…" autocomplete="off">
+        <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+      </form>
+		</div>
+	</div>
+	<!-- Component End  -->
+{% endblock %}
